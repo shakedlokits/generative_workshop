@@ -10,16 +10,12 @@ function preload() {
 function setup() {
   createCanvas(WIDTH, HEIGHT);
   balls.push(new Ball(WIDTH / 2, HEIGHT / 2, 200, 15, color(232, 52, 50)))
-  balls.push(new Ball(WIDTH / 2, HEIGHT / 2, 100, 10, color(245, 27, 86)))
   balls.push(new Ball(WIDTH / 2, HEIGHT / 2, 60, 5, color(95, 41, 210)))
+  balls.push(new Ball(WIDTH / 2, HEIGHT / 2, 100, 2, color(255, 199, 0)))
 }
 
 function draw() {
-  background(255, 207, 0)
-  balls[0].render()
-  balls[1].render()
   drawTitle()
-  balls[2].render()
 }
 
 function drawTitle() {
@@ -34,8 +30,9 @@ function drawTitle() {
   pop()
 }
 
-class Ball {
+class Ball extends Agent {
   constructor(x, y, size, density, color) {
+    super()
     this.position = createVector(x, y)
     this.acceleration = createVector(0, 0)
     this.size = size
@@ -43,7 +40,7 @@ class Ball {
     this.color = color
   }
 
-  render() {
+  step() {
     let mousePosition = createVector(mouseX, mouseY)
     this.acceleration
       .add(mousePosition.sub(this.position).mult(0.3)).mult(1 / this.density)
